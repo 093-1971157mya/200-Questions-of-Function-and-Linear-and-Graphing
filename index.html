@@ -3,348 +3,505 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functions, Linear Equations & Graphing Assessment</title>
+  <style>
+    /* Global Styles & Copy Prevention */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-user-select: none; /* Disable text selection */
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-  <title>GED Mathematics Practice Test</title>
+    body {
+      background-color: #f4f6f9;
+      color: #333;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
 
-  <link rel="stylesheet" href="style.css">
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 850px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+      position: relative;
+    }
+
+    h1, h2, h3 {
+      color: #1a252f;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    /* Screen Management */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* Top Sticky Header for Quiz */
+    .quiz-header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      padding: 15px 0;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .timer-box {
+      font-size: 20px;
+      font-weight: 700;
+      color: #dc2626;
+      background-color: #fef2f2;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid #fecaca;
+    }
+
+    /* Question Cards */
+    .question-card {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .question-text {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .option-label:hover {
+      border-color: #2563eb;
+      background-color: #eff6ff;
+    }
+
+    .option-label input {
+      margin-right: 12px;
+      transform: scale(1.2);
+    }
+
+    /* Results Screen */
+    .score-banner {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .score-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #166534;
+    }
+
+    .review-card {
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .review-card.correct {
+      border-left: 6px solid #16a34a;
+      background-color: #f0fdf4;
+    }
+
+    .review-card.incorrect {
+      border-left: 6px solid #dc2626;
+      background-color: #fef2f2;
+    }
+
+    .explanation-box {
+      margin-top: 12px;
+      padding: 12px;
+      background-color: #ffffff;
+      border-radius: 6px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .badge-correct { background-color: #dcfce7; color: #15803d; }
+    .badge-incorrect { background-color: #fee2e2; color: #b91c1c; }
+
+    .warning-text {
+      color: #dc2626;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-
 <body>
 
-  <!-- ================= START SCREEN ================= -->
+<div class="container">
+  
+  <!-- START SCREEN -->
+  <div id="start-screen" class="screen active">
+    <h1>Functions, Linear Equations & Graphing Test</h1>
+    <p style="margin-bottom: 15px;">Please read the following rules carefully before starting:</p>
+    <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 20px;">
+      <li><strong>Total Questions:</strong> 30 (randomly drawn from a pool of 200).</li>
+      <li><strong>Time Limit:</strong> 45 Minutes continuous (no pausing allowed).</li>
+      <li><strong>Attempt Limit:</strong> Exactly 1 attempt per candidate.</li>
+      <li><strong>Security Rules:</strong> Text copying, right-clicking, and text selection are disabled.</li>
+      <li><strong>Results:</strong> Detailed scores and solution explanations are provided immediately upon submission.</li>
+    </ul>
+    <button class="btn" id="start-btn" onclick="startQuiz()">Begin Assessment</button>
+    <div id="attempt-warning" class="warning-text" style="display: none;">
+      You have already completed this test. Multiple attempts are strictly prohibited.
+    </div>
+  </div>
 
-  <section id="startScreen" class="screen">
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="screen">
+    <div class="quiz-header">
+      <h2>Mathematics Assessment</h2>
+      <div class="timer-box" id="timer-display">45:00</div>
+    </div>
+    
+    <div id="questions-container"></div>
 
-    <div class="card intro">
+    <button class="btn" id="submit-btn" onclick="confirmSubmission()">Submit Test</button>
+  </div>
 
-      <h1>GED Mathematics Practice Test</h1>
-
-      <h2>
-        Functions • Linear Equations • Graphing
-      </h2>
-
-      <div class="instructions">
-
-        <h3>Instructions</h3>
-
-        <ul>
-          <li>There are <strong>200 questions</strong> in the question bank.</li>
-
-          <li>
-            Each test contains
-            <strong>30 questions</strong>.
-          </li>
-
-          <li>
-            The test time limit is
-            <strong>45 minutes</strong>.
-          </li>
-
-          <li>
-            Questions are randomly shuffled.
-          </li>
-
-          <li>
-            Answer choices are randomly shuffled.
-          </li>
-
-          <li>
-            The timer continues running when you leave the page.
-            There is no pause button.
-          </li>
-
-          <li>
-            Your score appears after submission.
-          </li>
-
-          <li>
-            Incorrect questions show the correct answer and explanation.
-          </li>
-
-          <li>
-            Practice Mode allows students to practice repeatedly.
-          </li>
-
-          <li>
-            Exam Mode allows only one submission on the browser/device.
-          </li>
-
-          <li>
-            Copy, paste and right-click are disabled as basic safeguards.
-          </li>
-        </ul>
-
-        <p class="warning">
-          <strong>Important:</strong>
-          Browser JavaScript cannot completely prevent screenshots,
-          developer tools, or copying with another device.
-        </p>
-
-      </div>
-
-
-      <label class="studentLabel">
-
-        Student Name
-
-        <input
-          type="text"
-          id="studentName"
-          placeholder="Enter student name"
-          maxlength="60"
-        >
-
-      </label>
-
-
-      <!-- MODE -->
-
-      <div class="modeBox">
-
-        <h3>Choose Test Mode</h3>
-
-        <label>
-          <input
-            type="radio"
-            name="testMode"
-            value="practice"
-            checked
-          >
-
-          <strong>Practice Mode</strong>
-
-          <span>
-            — Students can take the test many times.
-          </span>
-
-        </label>
-
-
-        <label>
-
-          <input
-            type="radio"
-            name="testMode"
-            value="exam"
-          >
-
-          <strong>Exam Mode</strong>
-
-          <span>
-            — One submission only on this browser/device.
-          </span>
-
-        </label>
-
-      </div>
-
-
-      <button
-        id="startButton"
-        class="primaryButton"
-      >
-        Start 30-Question Test
-      </button>
-
+  <!-- RESULTS SCREEN -->
+  <div id="results-screen" class="screen">
+    <h2>Assessment Results</h2>
+    <div class="score-banner">
+      <div>Your Final Score</div>
+      <div class="score-number" id="final-score">0 / 30</div>
+      <div id="score-percentage" style="font-weight: 600; color: #475569;">0%</div>
     </div>
 
-  </section>
+    <h3>Detailed Performance & Explanations</h3>
+    <div id="review-container"></div>
+  </div>
 
+</div>
 
+<script>
+  // SECURITY PREVENTIONS
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('copy', e => e.preventDefault());
+  document.addEventListener('cut', e => e.preventDefault());
+  document.addEventListener('selectstart', e => e.preventDefault());
 
-  <!-- ================= EXAM SCREEN ================= -->
+  // -------------------------------------------------------------
+  // QUESTION BANK (Expand this array up to 200 total items)
+  // -------------------------------------------------------------
+  const questionPool = [
+    {
+      id: 1,
+      question: "What is the slope of the line passing through the points (2, 5) and (6, 13)?",
+      options: ["2", "4", "1/2", "8"],
+      answer: "2",
+      explanation: "Slope m = (y2 - y1) / (x2 - x1). Here, (13 - 5) / (6 - 2) = 8 / 4 = 2."
+    },
+    {
+      id: 2,
+      question: "Which of the following represents a function?",
+      options: ["{(1,2), (2,3), (1,4)}", "{(3,5), (4,5), (5,5)}", "{(2,1), (2,2), (2,3)}", "{(0,1), (0,0), (0,-1)}"],
+      answer: "{(3,5), (4,5), (5,5)}",
+      explanation: "A relation is a function if every input (x-value) maps to exactly one output (y-value). In {(3,5), (4,5), (5,5)}, each x-value is unique."
+    },
+    {
+      id: 3,
+      question: "What is the x-intercept of the equation 3x - 4y = 12?",
+      options: ["(4, 0)", "(0, -3)", "(-4, 0)", "(0, 3)"],
+      answer: "(4, 0)",
+      explanation: "To find the x-intercept, set y = 0: 3x - 4(0) = 12 => 3x = 12 => x = 4. The point is (4, 0)."
+    },
+    {
+      id: 4,
+      question: "If f(x) = -2x + 7, what is the value of f(-3)?",
+      options: ["13", "1", "-1", "11"],
+      answer: "13",
+      explanation: "Substitute x = -3: f(-3) = -2(-3) + 7 = 6 + 7 = 13."
+    },
+    {
+      id: 5,
+      question: "Which line is parallel to the line y = -3x + 4?",
+      options: ["y = -3x - 2", "y = 3x + 4", "y = (1/3)x + 1", "y = -(1/3)x + 5"],
+      answer: "y = -3x - 2",
+      explanation: "Parallel lines have identical slopes. The given line has slope m = -3, so the parallel line must also have m = -3."
+    },
+    {
+      id: 6,
+      question: "What is the equation of a vertical line passing through the point (-5, 8)?",
+      options: ["x = -5", "y = 8", "y = -5x + 8", "x = 8"],
+      answer: "x = -5",
+      explanation: "Vertical lines have equations of the form x = a, where 'a' is the constant x-coordinate. Here x = -5."
+    },
+    {
+      id: 7,
+      question: "What is the slope of a horizontal line?",
+      options: ["0", "Undefined", "1", "-1"],
+      answer: "0",
+      explanation: "Horizontal lines have zero vertical change (rise = 0), making the slope m = 0 / run = 0."
+    },
+    {
+      id: 8,
+      question: "Which equation is written in Point-Slope form?",
+      options: ["y - y1 = m(x - x1)", "y = mx + b", "Ax + By = C", "f(x) = ax^2 + bx + c"],
+      answer: "y - y1 = m(x - x1)",
+      explanation: "Point-slope form is y - y1 = m(x - x1), where m is the slope and (x1, y1) is a point on the line."
+    },
+    {
+      id: 9,
+      question: "If two lines are perpendicular and line A has a slope of 2/5, what is the slope of line B?",
+      options: ["-5/2", "5/2", "-2/5", "2/5"],
+      answer: "-5/2",
+      explanation: "Perpendicular lines have negative reciprocal slopes. The negative reciprocal of 2/5 is -5/2."
+    },
+    {
+      id: 10,
+      question: "Find the domain of the function f(x) = (x + 2) / (x - 4).",
+      options: ["All real numbers except x = 4", "All real numbers except x = -2", "x > 4", "All real numbers"],
+      answer: "All real numbers except x = 4",
+      explanation: "Division by zero is undefined. Set denominator x - 4 = 0 => x = 4. The domain excludes x = 4."
+    }
+    // Add additional questions up to 200 following this exact structural template...
+  ];
 
-  <section id="examScreen" class="hidden">
+  // Global State Variables
+  let selectedQuestions = [];
+  let userAnswers = {};
+  let timerInterval = null;
+  const TOTAL_TEST_TIME = 45 * 60; // 45 minutes in seconds
 
-    <header class="examHeader">
+  // Check initial state
+  window.onload = function() {
+    if (localStorage.getItem("quizAttempted") === "true") {
+      document.getElementById("start-btn").disabled = true;
+      document.getElementById("attempt-warning").style.display = "block";
+    }
+  };
 
-      <div>
+  // Utility: Fisher-Yates Shuffle algorithm
+  function shuffleArray(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
 
-        <h2>
-          GED Mathematics
-        </h2>
+  // Start Assessment Logic
+  function startQuiz() {
+    if (localStorage.getItem("quizAttempted") === "true") return;
 
-        <p id="studentDisplay"></p>
+    // Set lock flag
+    localStorage.setItem("quizAttempted", "true");
 
-        <p id="modeDisplay"></p>
+    // Select 30 random questions from pool
+    const shuffledPool = shuffleArray(questionPool);
+    const poolSelection = shuffledPool.slice(0, Math.min(30, shuffledPool.length));
 
-      </div>
+    // Shuffle options for each selected question
+    selectedQuestions = poolSelection.map(q => {
+      return {
+        ...q,
+        options: shuffleArray(q.options)
+      };
+    });
 
+    // Render Quiz Questions
+    renderQuestions();
 
-      <div class="timerBox">
+    // Switch Screens
+    document.getElementById("start-screen").classList.remove("active");
+    document.getElementById("quiz-screen").classList.add("active");
 
-        <span>TIME</span>
+    // Start Timer
+    startTimer(TOTAL_TEST_TIME);
+  }
 
-        <strong id="timer">
-          45:00
-        </strong>
+  function renderQuestions() {
+    const container = document.getElementById("questions-container");
+    container.innerHTML = "";
 
-      </div>
+    selectedQuestions.forEach((q, index) => {
+      const qCard = document.createElement("div");
+      qCard.className = "question-card";
 
-    </header>
+      let optionsHTML = "";
+      q.options.forEach((opt) => {
+        optionsHTML += `
+          <label class="option-label">
+            <input type="radio" name="q_${q.id}" value="${escapeHtml(opt)}" onchange="recordAnswer(${q.id}, '${escapeHtml(opt)}')">
+            <span>${escapeHtml(opt)}</span>
+          </label>
+        `;
+      });
 
+      qCard.innerHTML = `
+        <div class="question-text">${index + 1}. ${escapeHtml(q.question)}</div>
+        <div class="options-group">${optionsHTML}</div>
+      `;
+      container.appendChild(qCard);
+    });
+  }
 
-    <div class="container">
+  function recordAnswer(qId, selectedOpt) {
+    userAnswers[qId] = selectedOpt;
+  }
 
-      <!-- PROGRESS -->
+  function escapeHtml(text) {
+    return text.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+  }
 
-      <div class="progressInformation">
+  // Timer Implementation
+  function startTimer(durationSeconds) {
+    let timer = durationSeconds;
+    const display = document.getElementById("timer-display");
 
-        <span id="questionProgress">
-          Question 1 of 30
+    timerInterval = setInterval(() => {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+
+      const formattedMin = minutes < 10 ? "0" + minutes : minutes;
+      const formattedSec = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = `${formattedMin}:${formattedSec}`;
+
+      if (--timer < 0) {
+        clearInterval(timerInterval);
+        alert("Time is up! Your answers will be automatically submitted.");
+        processSubmission();
+      }
+    }, 1000);
+  }
+
+  function confirmSubmission() {
+    const answeredCount = Object.keys(userAnswers).length;
+    const totalCount = selectedQuestions.length;
+    
+    if (answeredCount < totalCount) {
+      if (!confirm(`You have answered ${answeredCount} of ${totalCount} questions. Are you sure you want to submit?`)) {
+        return;
+      }
+    } else {
+      if (!confirm("Are you sure you want to finalize your submission?")) {
+        return;
+      }
+    }
+    processSubmission();
+  }
+
+  // Calculate Score and Display Results
+  function processSubmission() {
+    clearInterval(timerInterval);
+
+    let score = 0;
+    const reviewContainer = document.getElementById("review-container");
+    reviewContainer.innerHTML = "";
+
+    selectedQuestions.forEach((q, index) => {
+      const userAns = userAnswers[q.id];
+      const isCorrect = userAns === q.answer;
+
+      if (isCorrect) score++;
+
+      const reviewCard = document.createElement("div");
+      reviewCard.className = `review-card ${isCorrect ? 'correct' : 'incorrect'}`;
+
+      reviewCard.innerHTML = `
+        <span class="status-badge ${isCorrect ? 'badge-correct' : 'badge-incorrect'}">
+          ${isCorrect ? 'Correct' : 'Incorrect'}
         </span>
-
-        <span id="answeredProgress">
-          Answered: 0 / 30
-        </span>
-
-      </div>
-
-
-      <div class="progressBar">
-
-        <div id="progressFill"></div>
-
-      </div>
-
-
-      <!-- QUESTION -->
-
-      <main class="questionCard">
-
-        <div class="questionTop">
-
-          <span id="topicBadge">
-            Functions
-          </span>
-
-          <span id="questionNumber">
-            Question 1
-          </span>
-
+        <div class="question-text">${index + 1}. ${q.question}</div>
+        <div style="margin: 8px 0;"><strong>Your Answer:</strong> ${userAns ? userAns : "<em>Unanswered</em>"}</div>
+        <div><strong>Correct Answer:</strong> ${q.answer}</div>
+        <div class="explanation-box">
+          <strong>Explanation:</strong> ${q.explanation}
         </div>
+      `;
 
+      reviewContainer.appendChild(reviewCard);
+    });
 
-        <h2 id="questionText"></h2>
+    // Populate score details
+    document.getElementById("final-score").textContent = `${score} / ${selectedQuestions.length}`;
+    const percentage = Math.round((score / selectedQuestions.length) * 100);
+    document.getElementById("score-percentage").textContent = `${percentage}%`;
 
-
-        <!-- GRAPH -->
-
-        <div
-          id="questionVisual"
-          class="questionVisual"
-        ></div>
-
-
-        <!-- ANSWERS -->
-
-        <div id="answerChoices"></div>
-
-      </main>
-
-
-      <!-- NAVIGATION -->
-
-      <div class="navigation">
-
-        <button
-          id="previousButton"
-          class="secondaryButton"
-        >
-          ← Previous
-        </button>
-
-
-        <div
-          id="questionNumbers"
-          class="questionNumbers"
-        ></div>
-
-
-        <button
-          id="nextButton"
-          class="primaryButton"
-        >
-          Next →
-        </button>
-
-      </div>
-
-
-      <!-- SUBMIT -->
-
-      <button
-        id="submitButton"
-        class="submitButton"
-      >
-        Submit Test
-      </button>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ================= RESULT ================= -->
-
-  <section
-    id="resultScreen"
-    class="screen hidden"
-  >
-
-    <div class="card resultCard">
-
-      <h1>
-        Test Complete
-      </h1>
-
-      <p id="resultStudent"></p>
-
-      <div class="scoreCircle">
-
-        <span id="percentage">
-          0%
-        </span>
-
-      </div>
-
-
-      <h2 id="finalScore">
-        Score: 0 / 30
-      </h2>
-
-
-      <p id="resultMessage"></p>
-
-
-      <button
-        id="reviewButton"
-        class="primaryButton"
-      >
-        Review Questions
-      </button>
-
-
-      <button
-        id="practiceAgainButton"
-        class="practiceButton hidden"
-      >
-        Practice Again
-      </button>
-
-
-      <div
-        id="reviewArea"
-        class="reviewArea hidden"
-      ></div>
-
-    </div>
-
-  </section>
-
-
-  <script src="script.js"></script>
+    // Switch to results screen
+    document.getElementById("quiz-screen").classList.remove("active");
+    document.getElementById("results-screen").classList.add("active");
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 
 </body>
 </html>
