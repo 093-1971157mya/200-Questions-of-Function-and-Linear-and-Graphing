@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Functions, Linear Equations & Graphing Assessment</title>
   <style>
-    /* Global Styles & Copy Prevention */
+    /* Global Styles */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-user-select: none; /* Disable text selection */
+      -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
     }
 
     body {
-      background-color: #f4f6f9;
+      background-color: #cde2e5;
       color: #333;
       padding: 20px;
       display: flex;
@@ -28,7 +28,7 @@
     }
 
     .container {
-      background: #ffffff;
+      background: #e688ad;
       width: 100%;
       max-width: 850px;
       border-radius: 12px;
@@ -52,16 +52,20 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.2s;
-      margin-top: 20px;
+      margin-top: 15px;
+      margin-right: 10px;
     }
 
     .btn:hover {
       background-color: #1d4ed8;
     }
 
-    .btn:disabled {
-      background-color: #94a3b8;
-      cursor: not-allowed;
+    .btn-secondary {
+      background-color: #64748b;
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
     }
 
     /* Screen Management */
@@ -192,12 +196,6 @@
 
     .badge-correct { background-color: #dcfce7; color: #15803d; }
     .badge-incorrect { background-color: #fee2e2; color: #b91c1c; }
-
-    .warning-text {
-      color: #dc2626;
-      font-weight: 600;
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
@@ -206,19 +204,15 @@
   
   <!-- START SCREEN -->
   <div id="start-screen" class="screen active">
-    <h1>Functions, Linear Equations & Graphing Test</h1>
-    <p style="margin-bottom: 15px;">Please read the following rules carefully before starting:</p>
+    <h1>Functions, Linear Equations & Graphing Practice</h1>
+    <p style="margin-bottom: 15px;">Practice mode draws a random set of 30 questions from the master question pool:</p>
     <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 20px;">
-      <li><strong>Total Questions:</strong> 30 (randomly drawn from a pool of 200).</li>
-      <li><strong>Time Limit:</strong> 45 Minutes continuous (no pausing allowed).</li>
-      <li><strong>Attempt Limit:</strong> Exactly 1 attempt per candidate.</li>
-      <li><strong>Security Rules:</strong> Text copying, right-clicking, and text selection are disabled.</li>
-      <li><strong>Results:</strong> Detailed scores and solution explanations are provided immediately upon submission.</li>
+      <li><strong>Questions per Attempt:</strong> 30 randomized questions.</li>
+      
+      <li><strong>Time Limit:</strong> 45 Minutes per attempt.</li>
+      <li><strong>Practice Mode:</strong> Unlimited retakes available. Each test selects a new set of random questions.</li>
     </ul>
-    <button class="btn" id="start-btn" onclick="startQuiz()">Begin Assessment</button>
-    <div id="attempt-warning" class="warning-text" style="display: none;">
-      You have already completed this test. Multiple attempts are strictly prohibited.
-    </div>
+    <button class="btn" id="start-btn" onclick="startQuiz()">Start Practice Test</button>
   </div>
 
   <!-- QUIZ SCREEN -->
@@ -240,6 +234,7 @@
       <div>Your Final Score</div>
       <div class="score-number" id="final-score">0 / 30</div>
       <div id="score-percentage" style="font-weight: 600; color: #475569;">0%</div>
+      <button class="btn" onclick="resetToStart()">Take Another Practice Test</button>
     </div>
 
     <h3>Detailed Performance & Explanations</h3>
@@ -249,104 +244,54 @@
 </div>
 
 <script>
-  // SECURITY PREVENTIONS
+  // Disable right click and copying
   document.addEventListener('contextmenu', e => e.preventDefault());
   document.addEventListener('copy', e => e.preventDefault());
   document.addEventListener('cut', e => e.preventDefault());
-  document.addEventListener('selectstart', e => e.preventDefault());
 
-  // -------------------------------------------------------------
-  // QUESTION BANK (Expand this array up to 200 total items)
-  // -------------------------------------------------------------
+  // QUESTION BANK (Expandable to 200 items)
   const questionPool = [
-    {
-      id: 1,
-      question: "What is the slope of the line passing through the points (2, 5) and (6, 13)?",
-      options: ["2", "4", "1/2", "8"],
-      answer: "2",
-      explanation: "Slope m = (y2 - y1) / (x2 - x1). Here, (13 - 5) / (6 - 2) = 8 / 4 = 2."
-    },
-    {
-      id: 2,
-      question: "Which of the following represents a function?",
-      options: ["{(1,2), (2,3), (1,4)}", "{(3,5), (4,5), (5,5)}", "{(2,1), (2,2), (2,3)}", "{(0,1), (0,0), (0,-1)}"],
-      answer: "{(3,5), (4,5), (5,5)}",
-      explanation: "A relation is a function if every input (x-value) maps to exactly one output (y-value). In {(3,5), (4,5), (5,5)}, each x-value is unique."
-    },
-    {
-      id: 3,
-      question: "What is the x-intercept of the equation 3x - 4y = 12?",
-      options: ["(4, 0)", "(0, -3)", "(-4, 0)", "(0, 3)"],
-      answer: "(4, 0)",
-      explanation: "To find the x-intercept, set y = 0: 3x - 4(0) = 12 => 3x = 12 => x = 4. The point is (4, 0)."
-    },
-    {
-      id: 4,
-      question: "If f(x) = -2x + 7, what is the value of f(-3)?",
-      options: ["13", "1", "-1", "11"],
-      answer: "13",
-      explanation: "Substitute x = -3: f(-3) = -2(-3) + 7 = 6 + 7 = 13."
-    },
-    {
-      id: 5,
-      question: "Which line is parallel to the line y = -3x + 4?",
-      options: ["y = -3x - 2", "y = 3x + 4", "y = (1/3)x + 1", "y = -(1/3)x + 5"],
-      answer: "y = -3x - 2",
-      explanation: "Parallel lines have identical slopes. The given line has slope m = -3, so the parallel line must also have m = -3."
-    },
-    {
-      id: 6,
-      question: "What is the equation of a vertical line passing through the point (-5, 8)?",
-      options: ["x = -5", "y = 8", "y = -5x + 8", "x = 8"],
-      answer: "x = -5",
-      explanation: "Vertical lines have equations of the form x = a, where 'a' is the constant x-coordinate. Here x = -5."
-    },
-    {
-      id: 7,
-      question: "What is the slope of a horizontal line?",
-      options: ["0", "Undefined", "1", "-1"],
-      answer: "0",
-      explanation: "Horizontal lines have zero vertical change (rise = 0), making the slope m = 0 / run = 0."
-    },
-    {
-      id: 8,
-      question: "Which equation is written in Point-Slope form?",
-      options: ["y - y1 = m(x - x1)", "y = mx + b", "Ax + By = C", "f(x) = ax^2 + bx + c"],
-      answer: "y - y1 = m(x - x1)",
-      explanation: "Point-slope form is y - y1 = m(x - x1), where m is the slope and (x1, y1) is a point on the line."
-    },
-    {
-      id: 9,
-      question: "If two lines are perpendicular and line A has a slope of 2/5, what is the slope of line B?",
-      options: ["-5/2", "5/2", "-2/5", "2/5"],
-      answer: "-5/2",
-      explanation: "Perpendicular lines have negative reciprocal slopes. The negative reciprocal of 2/5 is -5/2."
-    },
-    {
-      id: 10,
-      question: "Find the domain of the function f(x) = (x + 2) / (x - 4).",
-      options: ["All real numbers except x = 4", "All real numbers except x = -2", "x > 4", "All real numbers"],
-      answer: "All real numbers except x = 4",
-      explanation: "Division by zero is undefined. Set denominator x - 4 = 0 => x = 4. The domain excludes x = 4."
-    }
-    // Add additional questions up to 200 following this exact structural template...
+    { id: 1, question: "What is the slope of the line passing through (2, 5) and (6, 13)?", options: ["2", "4", "1/2", "8"], answer: "2", explanation: "Slope m = (y2 - y1) / (x2 - x1) = (13 - 5) / (6 - 2) = 8 / 4 = 2." },
+    { id: 2, question: "Which set of ordered pairs represents a function?", options: ["{(1,2), (2,3), (1,4)}", "{(3,5), (4,5), (5,5)}", "{(2,1), (2,2), (2,3)}", "{(0,1), (0,0), (0,-1)}"], answer: "{(3,5), (4,5), (5,5)}", explanation: "A relation is a function if every input (x) maps to exactly one output (y)." },
+    { id: 3, question: "What is the x-intercept of 3x - 4y = 12?", options: ["(4, 0)", "(0, -3)", "(-4, 0)", "(0, 3)"], answer: "(4, 0)", explanation: "Set y = 0: 3x - 4(0) = 12 => 3x = 12 => x = 4." },
+    { id: 4, question: "If f(x) = -2x + 7, what is f(-3)?", options: ["13", "1", "-1", "11"], answer: "13", explanation: "f(-3) = -2(-3) + 7 = 6 + 7 = 13." },
+    { id: 5, question: "Which line is parallel to y = -3x + 4?", options: ["y = -3x - 2", "y = 3x + 4", "y = (1/3)x + 1", "y = -(1/3)x + 5"], answer: "y = -3x - 2", explanation: "Parallel lines have equal slopes (m = -3)." },
+    { id: 6, question: "What is the equation of a vertical line passing through (-5, 8)?", options: ["x = -5", "y = 8", "y = -5x + 8", "x = 8"], answer: "x = -5", explanation: "Vertical lines have equations of the form x = a." },
+    { id: 7, question: "What is the slope of a horizontal line?", options: ["0", "Undefined", "1", "-1"], answer: "0", explanation: "Horizontal lines have zero vertical change (rise = 0)." },
+    { id: 8, question: "Which equation is written in Point-Slope form?", options: ["y - y1 = m(x - x1)", "y = mx + b", "Ax + By = C", "f(x) = ax^2 + bx + c"], answer: "y - y1 = m(x - x1)", explanation: "Point-slope form is y - y1 = m(x - x1)." },
+    { id: 9, question: "If a line has a slope of 2/5, what is the slope of a perpendicular line?", options: ["-5/2", "5/2", "-2/5", "2/5"], answer: "-5/2", explanation: "Perpendicular slopes are negative reciprocals." },
+    { id: 10, question: "Find the domain of f(x) = (x + 2) / (x - 4).", options: ["All real numbers except x = 4", "All real numbers except x = -2", "x > 4", "All real numbers"], answer: "All real numbers except x = 4", explanation: "Denominator cannot equal zero, so x - 4 ≠ 0 => x ≠ 4." },
+    { id: 11, question: "What is the y-intercept of y = 4x - 9?", options: ["(0, -9)", "(0, 9)", "(9/4, 0)", "(-9, 0)"], answer: "(0, -9)", explanation: "In slope-intercept form y = mx + b, b is the y-intercept." },
+    { id: 12, question: "Which of the following lines has an undefined slope?", options: ["x = 3", "y = 3", "y = 3x", "y = -x"], answer: "x = 3", explanation: "Vertical lines (x = c) have undefined slopes because run = 0." },
+    { id: 13, question: "What is the slope of 2x + 5y = 10?", options: ["-2/5", "2/5", "-5/2", "2"], answer: "-2/5", explanation: "Convert to y = mx + b: 5y = -2x + 10 => y = -2/5x + 2. Slope is -2/5." },
+    { id: 14, question: "If g(x) = x^2 - 4x, evaluate g(-2).", options: ["12", "-12", "4", "0"], answer: "12", explanation: "g(-2) = (-2)^2 - 4(-2) = 4 + 8 = 12." },
+    { id: 15, question: "What is the slope-intercept form of a line with m = 3 passing through (1, 2)?", options: ["y = 3x - 1", "y = 3x + 1", "y = 3x - 2", "y = 3x + 5"], answer: "y = 3x - 1", explanation: "y - 2 = 3(x - 1) => y - 2 = 3x - 3 => y = 3x - 1." },
+    { id: 16, question: "Which test determines if a graph represents a function?", options: ["Vertical Line Test", "Horizontal Line Test", "Diagonal Line Test", "Slope Test"], answer: "Vertical Line Test", explanation: "If a vertical line intersects a graph more than once, it is not a function." },
+    { id: 17, question: "What is the range of f(x) = x^2 + 3?", options: ["y ≥ 3", "y ≥ 0", "All real numbers", "y ≤ 3"], answer: "y ≥ 3", explanation: "Since x^2 ≥ 0, x^2 + 3 ≥ 3." },
+    { id: 18, question: "What is the solution to the system: y = 2x + 1 and y = -x + 7?", options: ["(2, 5)", "(3, 4)", "(1, 3)", "(4, 9)"], answer: "(2, 5)", explanation: "2x + 1 = -x + 7 => 3x = 6 => x = 2. Then y = 2(2) + 1 = 5." },
+    { id: 19, question: "If a line passes through (0, 0) and (4, -8), what is its equation?", options: ["y = -2x", "y = 2x", "y = -1/2x", "y = -8x"], answer: "y = -2x", explanation: "m = (-8 - 0) / (4 - 0) = -2. The y-intercept is 0, so y = -2x." },
+    { id: 20, question: "Which equation represents standard form of a linear equation?", options: ["Ax + By = C", "y = mx + b", "y - y1 = m(x - x1)", "x/a + y/b = 1"], answer: "Ax + By = C", explanation: "Standard form is Ax + By = C where A, B, and C are integers." },
+    { id: 21, question: "Find the slope of a line parallel to 4x - 2y = 8.", options: ["2", "-2", "4", "1/2"], answer: "2", explanation: "Convert to y = mx + b: -2y = -4x + 8 => y = 2x - 4. Slope m = 2." },
+    { id: 22, question: "What is the range of f(x) = -|x|?", options: ["y ≤ 0", "y ≥ 0", "All real numbers", "y < 0"], answer: "y ≤ 0", explanation: "Absolute value is non-negative, so -|x| is always less than or equal to 0." },
+    { id: 23, question: "What is the rate of change of y = 7 - 5x?", options: ["-5", "7", "5", "-7"], answer: "-5", explanation: "The rate of change is the slope m = -5." },
+    { id: 24, question: "Which point lies on the line y = 3x - 4?", options: ["(2, 2)", "(1, 1)", "(3, 4)", "(0, 4)"], answer: "(2, 2)", explanation: "Plug in x = 2: y = 3(2) - 4 = 2. Point (2, 2) satisfies the equation." },
+    { id: 25, question: "If f(x) = 4x + 1, find x when f(x) = 13.", options: ["3", "4", "2", "5"], answer: "3", explanation: "4x + 1 = 13 => 4x = 12 => x = 3." },
+    { id: 26, question: "What is the inverse function of f(x) = 2x + 4?", options: ["f⁻¹(x) = (x - 4) / 2", "f⁻¹(x) = 2x - 4", "f⁻¹(x) = (x + 4) / 2", "f⁻¹(x) = 1/2x + 4"], answer: "f⁻¹(x) = (x - 4) / 2", explanation: "Swap x and y: x = 2y + 4 => x - 4 = 2y => y = (x - 4)/2." },
+    { id: 27, question: "What is the midpoint between (2, 4) and (6, 10)?", options: ["(4, 7)", "(8, 14)", "(2, 3)", "(4, 6)"], answer: "(4, 7)", explanation: "Midpoint = ((x1+x2)/2, (y1+y2)/2) = ((2+6)/2, (4+10)/2) = (4, 7)." },
+    { id: 28, question: "Two lines with slopes m1 and m2 are perpendicular if:", options: ["m1 * m2 = -1", "m1 = m2", "m1 + m2 = 0", "m1 * m2 = 1"], answer: "m1 * m2 = -1", explanation: "Perpendicular lines have negative reciprocal slopes, so their product is -1." },
+    { id: 29, question: "What is the domain of f(x) = √(x - 5)?", options: ["x ≥ 5", "x > 5", "x ≤ 5", "All real numbers"], answer: "x ≥ 5", explanation: "Under a square root, x - 5 ≥ 0 => x ≥ 5." },
+    { id: 30, question: "What is the distance between (0, 0) and (3, 4)?", options: ["5", "7", "25", "12"], answer: "5", explanation: "Distance = √( (3-0)^2 + (4-0)^2 ) = √(9 + 16) = √25 = 5." }
+    // You can paste additional questions up to 200 following this exact format.
   ];
 
   // Global State Variables
   let selectedQuestions = [];
   let userAnswers = {};
   let timerInterval = null;
-  const TOTAL_TEST_TIME = 45 * 60; // 45 minutes in seconds
+  const QUESTIONS_PER_TEST = 30;
+  const TOTAL_TEST_TIME = 45 * 60; // 45 minutes
 
-  // Check initial state
-  window.onload = function() {
-    if (localStorage.getItem("quizAttempted") === "true") {
-      document.getElementById("start-btn").disabled = true;
-      document.getElementById("attempt-warning").style.display = "block";
-    }
-  };
-
-  // Utility: Fisher-Yates Shuffle algorithm
+  // Fisher-Yates Shuffle
   function shuffleArray(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -358,31 +303,24 @@
 
   // Start Assessment Logic
   function startQuiz() {
-    if (localStorage.getItem("quizAttempted") === "true") return;
+    userAnswers = {};
 
-    // Set lock flag
-    localStorage.setItem("quizAttempted", "true");
-
-    // Select 30 random questions from pool
+    // Select random questions from pool
     const shuffledPool = shuffleArray(questionPool);
-    const poolSelection = shuffledPool.slice(0, Math.min(30, shuffledPool.length));
+    const poolSelection = shuffledPool.slice(0, Math.min(QUESTIONS_PER_TEST, shuffledPool.length));
 
     // Shuffle options for each selected question
-    selectedQuestions = poolSelection.map(q => {
-      return {
-        ...q,
-        options: shuffleArray(q.options)
-      };
-    });
+    selectedQuestions = poolSelection.map(q => ({
+      ...q,
+      options: shuffleArray(q.options)
+    }));
 
-    // Render Quiz Questions
     renderQuestions();
 
-    // Switch Screens
     document.getElementById("start-screen").classList.remove("active");
+    document.getElementById("results-screen").classList.remove("active");
     document.getElementById("quiz-screen").classList.add("active");
 
-    // Start Timer
     startTimer(TOTAL_TEST_TIME);
   }
 
@@ -422,6 +360,7 @@
 
   // Timer Implementation
   function startTimer(durationSeconds) {
+    if (timerInterval) clearInterval(timerInterval);
     let timer = durationSeconds;
     const display = document.getElementById("timer-display");
 
@@ -436,7 +375,7 @@
 
       if (--timer < 0) {
         clearInterval(timerInterval);
-        alert("Time is up! Your answers will be automatically submitted.");
+        alert("Time is up! Submitting your answers.");
         processSubmission();
       }
     }, 1000);
@@ -447,18 +386,13 @@
     const totalCount = selectedQuestions.length;
     
     if (answeredCount < totalCount) {
-      if (!confirm(`You have answered ${answeredCount} of ${totalCount} questions. Are you sure you want to submit?`)) {
-        return;
-      }
+      if (!confirm(`You have answered ${answeredCount} of ${totalCount} questions. Are you sure you want to submit?`)) return;
     } else {
-      if (!confirm("Are you sure you want to finalize your submission?")) {
-        return;
-      }
+      if (!confirm("Are you sure you want to finalize your submission?")) return;
     }
     processSubmission();
   }
 
-  // Calculate Score and Display Results
   function processSubmission() {
     clearInterval(timerInterval);
 
@@ -490,15 +424,19 @@
       reviewContainer.appendChild(reviewCard);
     });
 
-    // Populate score details
     document.getElementById("final-score").textContent = `${score} / ${selectedQuestions.length}`;
     const percentage = Math.round((score / selectedQuestions.length) * 100);
     document.getElementById("score-percentage").textContent = `${percentage}%`;
 
-    // Switch to results screen
     document.getElementById("quiz-screen").classList.remove("active");
     document.getElementById("results-screen").classList.add("active");
     
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetToStart() {
+    document.getElementById("results-screen").classList.remove("active");
+    document.getElementById("start-screen").classList.add("active");
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
