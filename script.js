@@ -2306,7 +2306,3 @@ window.addEventListener(
 
   }
 );
-localStorage.setItem(
-    "GED_MATH_EXAM_SUBMITTED_V1",
-    ...
-);
