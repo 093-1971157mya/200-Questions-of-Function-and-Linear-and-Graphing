@@ -1,0 +1,662 @@
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #eef2f7;
+
+  color: #172033;
+}
+
+
+/* ================= GENERAL ================= */
+
+.hidden {
+  display: none !important;
+}
+
+
+.screen {
+  min-height: 100vh;
+
+  padding: 25px;
+}
+
+
+.card {
+  max-width: 950px;
+
+  margin: 25px auto;
+
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 25px
+    rgba(0,0,0,0.08);
+}
+
+
+/* ================= START PAGE ================= */
+
+.intro h1 {
+  color: #173a68;
+
+  margin-top: 0;
+}
+
+
+.intro h2 {
+  color: #52657d;
+
+  font-weight: normal;
+}
+
+
+.instructions {
+
+  background: #f5f8fc;
+
+  border-left:
+    5px solid #2365aa;
+
+  padding: 15px 20px;
+
+  border-radius: 8px;
+}
+
+
+.instructions li {
+
+  margin: 10px 0;
+
+  line-height: 1.5;
+}
+
+
+.warning {
+
+  background: #fff5d8;
+
+  padding: 12px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+}
+
+
+.studentLabel {
+
+  display: block;
+
+  margin-top: 20px;
+
+  font-weight: bold;
+}
+
+
+.studentLabel input {
+
+  width: 100%;
+
+  margin-top: 7px;
+
+  padding: 12px;
+
+  border:
+    1px solid #b9c5d4;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+
+.modeBox {
+
+  margin:
+    20px 0;
+
+  padding: 15px;
+
+  background: #eef5fc;
+
+  border:
+    1px solid #c8d9eb;
+
+  border-radius: 9px;
+}
+
+
+.modeBox label {
+
+  display: block;
+
+  margin: 12px 0;
+
+  line-height: 1.5;
+}
+
+
+.modeBox input {
+
+  width: auto;
+
+  margin-right: 8px;
+}
+
+
+/* ================= BUTTONS ================= */
+
+button {
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding:
+    11px 18px;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+
+button:disabled {
+
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+
+.primaryButton {
+
+  background: #2365aa;
+
+  color: white;
+}
+
+
+.secondaryButton {
+
+  background: #e5ebf2;
+
+  color: #203149;
+}
+
+
+.submitButton {
+
+  display: block;
+
+  margin:
+    20px auto 30px;
+
+  background: #a3242b;
+
+  color: white;
+
+  padding:
+    13px 25px;
+}
+
+
+.practiceButton {
+
+  background: #55a16a;
+
+  color: white;
+
+  margin-left: 8px;
+}
+
+
+/* ================= HEADER ================= */
+
+.examHeader {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 10;
+
+  background: #173a68;
+
+  color: white;
+
+  padding:
+    10px 5%;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  box-shadow:
+    0 2px 10px
+    rgba(0,0,0,0.2);
+}
+
+
+.examHeader h2 {
+
+  margin: 0;
+
+  font-size: 20px;
+}
+
+
+.examHeader p {
+
+  margin:
+    3px 0;
+
+  font-size: 13px;
+
+  opacity: .9;
+}
+
+
+.timerBox {
+
+  background: white;
+
+  color: #172033;
+
+  text-align: center;
+
+  padding:
+    6px 15px;
+
+  border-radius: 9px;
+
+  min-width: 100px;
+}
+
+
+.timerBox span {
+
+  display: block;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+}
+
+
+.timerBox strong {
+
+  font-size: 23px;
+}
+
+
+/* ================= CONTAINER ================= */
+
+.container {
+
+  max-width: 1100px;
+
+  margin: auto;
+
+  padding: 15px;
+}
+
+
+.progressInformation {
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  margin-bottom: 6px;
+
+  font-size: 14px;
+}
+
+
+.progressBar {
+
+  height: 8px;
+
+  background: #d8e0e9;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  margin-bottom: 15px;
+}
+
+
+#progressFill {
+
+  height: 100%;
+
+  width: 0%;
+
+  background: #2878c8;
+
+  transition:
+    width .2s;
+}
+
+
+/* ================= QUESTION ================= */
+
+.questionCard {
+
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 14px;
+
+  min-height: 400px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,0.07);
+}
+
+
+.questionTop {
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  margin-bottom: 20px;
+}
+
+
+#topicBadge {
+
+  background: #e7f0fb;
+
+  color: #20558e;
+
+  padding:
+    6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: bold;
+}
+
+
+#questionText {
+
+  font-size: 21px;
+
+  line-height: 1.5;
+}
+
+
+.questionVisual {
+
+  text-align: center;
+
+  margin:
+    15px 0;
+
+  overflow-x: auto;
+}
+
+
+/* ================= ANSWERS ================= */
+
+.answerChoice {
+
+  display: flex;
+
+  gap: 12px;
+
+  align-items: flex-start;
+
+  padding: 13px;
+
+  margin: 10px 0;
+
+  border:
+    1px solid #ccd5df;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+}
+
+
+.answerChoice:hover {
+
+  background: #f4f8fd;
+
+  border-color: #7da3cb;
+}
+
+
+.answerChoice input {
+
+  width: auto;
+
+  margin-top: 4px;
+}
+
+
+/* ================= NAVIGATION ================= */
+
+.navigation {
+
+  max-width: 1100px;
+
+  margin:
+    15px auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+}
+
+
+.questionNumbers {
+
+  text-align: center;
+
+  max-width: 650px;
+}
+
+
+.questionDot {
+
+  width: 26px;
+
+  height: 26px;
+
+  padding: 0;
+
+  margin: 2px;
+
+  border-radius: 50%;
+
+  background: #dce3eb;
+
+  font-size: 11px;
+}
+
+
+.questionDot.current {
+
+  background: #2365aa;
+
+  color: white;
+}
+
+
+.questionDot.answered {
+
+  background: #55a16a;
+
+  color: white;
+}
+
+
+.questionDot.current.answered {
+
+  background: #2365aa;
+}
+
+
+/* ================= RESULT ================= */
+
+.resultCard {
+
+  text-align: center;
+}
+
+
+.scoreCircle {
+
+  width: 150px;
+
+  height: 150px;
+
+  margin:
+    25px auto;
+
+  border:
+    11px solid #2878c8;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+.scoreCircle span {
+
+  font-size: 30px;
+
+  font-weight: bold;
+}
+
+
+/* ================= REVIEW ================= */
+
+.reviewArea {
+
+  margin-top: 30px;
+
+  text-align: left;
+}
+
+
+.reviewItem {
+
+  padding: 17px;
+
+  margin: 12px 0;
+
+  border:
+    1px solid #ccd5df;
+
+  border-radius: 10px;
+}
+
+
+.reviewItem.correct {
+
+  border-left:
+    6px solid #55a16a;
+}
+
+
+.reviewItem.incorrect {
+
+  border-left:
+    6px solid #a3242b;
+}
+
+
+.explanation {
+
+  background: #f3f7fb;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  margin-top: 10px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px) {
+
+  .card {
+
+    padding: 18px;
+
+  }
+
+  .questionCard {
+
+    padding: 18px;
+
+  }
+
+  #questionText {
+
+    font-size: 18px;
+
+  }
+
+  .questionNumbers {
+
+    display: none;
+
+  }
+
+  .examHeader {
+
+    padding:
+      9px 12px;
+
+  }
+
+  .examHeader h2 {
+
+    font-size: 16px;
+
+  }
+
+}

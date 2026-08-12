@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GED Mathematics Practice Test</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ================= START SCREEN ================= -->
+
+  <section id="startScreen" class="screen">
+
+    <div class="card intro">
+
+      <h1>GED Mathematics Practice Test</h1>
+
+      <h2>
+        Functions • Linear Equations • Graphing
+      </h2>
+
+      <div class="instructions">
+
+        <h3>Instructions</h3>
+
+        <ul>
+          <li>There are <strong>200 questions</strong> in the question bank.</li>
+
+          <li>
+            Each test contains
+            <strong>30 questions</strong>.
+          </li>
+
+          <li>
+            The test time limit is
+            <strong>45 minutes</strong>.
+          </li>
+
+          <li>
+            Questions are randomly shuffled.
+          </li>
+
+          <li>
+            Answer choices are randomly shuffled.
+          </li>
+
+          <li>
+            The timer continues running when you leave the page.
+            There is no pause button.
+          </li>
+
+          <li>
+            Your score appears after submission.
+          </li>
+
+          <li>
+            Incorrect questions show the correct answer and explanation.
+          </li>
+
+          <li>
+            Practice Mode allows students to practice repeatedly.
+          </li>
+
+          <li>
+            Exam Mode allows only one submission on the browser/device.
+          </li>
+
+          <li>
+            Copy, paste and right-click are disabled as basic safeguards.
+          </li>
+        </ul>
+
+        <p class="warning">
+          <strong>Important:</strong>
+          Browser JavaScript cannot completely prevent screenshots,
+          developer tools, or copying with another device.
+        </p>
+
+      </div>
+
+
+      <label class="studentLabel">
+
+        Student Name
+
+        <input
+          type="text"
+          id="studentName"
+          placeholder="Enter student name"
+          maxlength="60"
+        >
+
+      </label>
+
+
+      <!-- MODE -->
+
+      <div class="modeBox">
+
+        <h3>Choose Test Mode</h3>
+
+        <label>
+          <input
+            type="radio"
+            name="testMode"
+            value="practice"
+            checked
+          >
+
+          <strong>Practice Mode</strong>
+
+          <span>
+            — Students can take the test many times.
+          </span>
+
+        </label>
+
+
+        <label>
+
+          <input
+            type="radio"
+            name="testMode"
+            value="exam"
+          >
+
+          <strong>Exam Mode</strong>
+
+          <span>
+            — One submission only on this browser/device.
+          </span>
+
+        </label>
+
+      </div>
+
+
+      <button
+        id="startButton"
+        class="primaryButton"
+      >
+        Start 30-Question Test
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= EXAM SCREEN ================= -->
+
+  <section id="examScreen" class="hidden">
+
+    <header class="examHeader">
+
+      <div>
+
+        <h2>
+          GED Mathematics
+        </h2>
+
+        <p id="studentDisplay"></p>
+
+        <p id="modeDisplay"></p>
+
+      </div>
+
+
+      <div class="timerBox">
+
+        <span>TIME</span>
+
+        <strong id="timer">
+          45:00
+        </strong>
+
+      </div>
+
+    </header>
+
+
+    <div class="container">
+
+      <!-- PROGRESS -->
+
+      <div class="progressInformation">
+
+        <span id="questionProgress">
+          Question 1 of 30
+        </span>
+
+        <span id="answeredProgress">
+          Answered: 0 / 30
+        </span>
+
+      </div>
+
+
+      <div class="progressBar">
+
+        <div id="progressFill"></div>
+
+      </div>
+
+
+      <!-- QUESTION -->
+
+      <main class="questionCard">
+
+        <div class="questionTop">
+
+          <span id="topicBadge">
+            Functions
+          </span>
+
+          <span id="questionNumber">
+            Question 1
+          </span>
+
+        </div>
+
+
+        <h2 id="questionText"></h2>
+
+
+        <!-- GRAPH -->
+
+        <div
+          id="questionVisual"
+          class="questionVisual"
+        ></div>
+
+
+        <!-- ANSWERS -->
+
+        <div id="answerChoices"></div>
+
+      </main>
+
+
+      <!-- NAVIGATION -->
+
+      <div class="navigation">
+
+        <button
+          id="previousButton"
+          class="secondaryButton"
+        >
+          ← Previous
+        </button>
+
+
+        <div
+          id="questionNumbers"
+          class="questionNumbers"
+        ></div>
+
+
+        <button
+          id="nextButton"
+          class="primaryButton"
+        >
+          Next →
+        </button>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+
+      <button
+        id="submitButton"
+        class="submitButton"
+      >
+        Submit Test
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= RESULT ================= -->
+
+  <section
+    id="resultScreen"
+    class="screen hidden"
+  >
+
+    <div class="card resultCard">
+
+      <h1>
+        Test Complete
+      </h1>
+
+      <p id="resultStudent"></p>
+
+      <div class="scoreCircle">
+
+        <span id="percentage">
+          0%
+        </span>
+
+      </div>
+
+
+      <h2 id="finalScore">
+        Score: 0 / 30
+      </h2>
+
+
+      <p id="resultMessage"></p>
+
+
+      <button
+        id="reviewButton"
+        class="primaryButton"
+      >
+        Review Questions
+      </button>
+
+
+      <button
+        id="practiceAgainButton"
+        class="practiceButton hidden"
+      >
+        Practice Again
+      </button>
+
+
+      <div
+        id="reviewArea"
+        class="reviewArea hidden"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
